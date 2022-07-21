@@ -45,12 +45,17 @@ body {
         align-items: center;
         justify-content: space-even;
         width: 800px;
+        height: 675px;
 }
 #hand, #permanents, #lands {
     display: flex;
     align-items: center;
     width: 780px;
     height: 250px;
+}
+#hand {
+    display: flex;
+    margin: -3em;
 }
 #phases {
     display: flex;
