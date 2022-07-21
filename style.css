@@ -1,7 +1,8 @@
 /* Making the background a color close to the back of a magic card while still not looking too dark */
 body {
     background-color: BD400F;
-    
+    color: white;
+    font-family: georgia;
 }
 
 /* When hovering over any cards, I want the user to know which is being selected */
@@ -32,6 +33,9 @@ body {
     justify-content: space-even;
     background-color: 3A231A;
     width: 200px;
+}
+#me {
+    width: 190px;
 }
 
 /* battlefield and hand will somehow fit here */
