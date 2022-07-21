@@ -1,0 +1,72 @@
+/* Making the background a color close to the back of a magic card while still not looking too dark */
+body {
+    background-color: BD400F;
+    
+}
+
+/* When hovering over any cards, I want the user to know which is being selected */
+.card:hover {
+    margin: -1em 0em 0em 0em;
+}
+.card {
+    height: 225px;
+}
+
+/* need a clear indicater of my divs while I mess with it */
+.box {
+    border-style: double;
+}
+
+#setup {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+}
+
+/* This column will show the user what action they just took */
+#aid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-even;
+    background-color: 3A231A;
+    width: 200px;
+}
+
+/* battlefield and hand will somehow fit here */
+#mid {
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-even;
+        width: 800px;
+}
+#hand, #permanents, #lands {
+    display: flex;
+    align-items: center;
+    width: 780px;
+    height: 250px;
+}
+#phases {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 790px;
+}
+
+/* my deck will go here */
+#library {
+    display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-even;
+        width: 200px;
+}
+#deck {
+    width: 190px;
+}
+
+p {
+    padding: 1em;
+}
