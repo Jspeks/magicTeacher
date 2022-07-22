@@ -37,6 +37,9 @@ body {
 #me {
     width: 190px;
 }
+.mana {
+    width: 50px;
+}
 
 /* battlefield and hand will somehow fit here */
 #mid {
@@ -53,6 +56,7 @@ body {
     width: 780px;
     height: 250px;
 }
+/* the hand can be just a tad over the lands, just to save room without ruining the experience */
 #hand {
     display: flex;
     margin: -3em;
