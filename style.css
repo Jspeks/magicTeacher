@@ -50,6 +50,11 @@ body {
         width: 800px;
         height: 675px;
 }
+#life {
+    cursor: pointer;
+    font-family: fantasy;
+    font-size: 2em;
+}
 #hand, #permanents, #lands {
     display: flex;
     align-items: center;
