@@ -8,7 +8,6 @@ function tapForMana(e){
     setTimeout(silence, 4000);
 };
 function tapToAttack(e) {
-    console.log(e)
     e.target.style.transform = "rotate(90deg)";
     captainHindsight.textContent = "You attempted to attack, but my code isn't done yet";
     setTimeout(silence, 4000);
@@ -23,8 +22,8 @@ function drawACard(){};
 function victory(){};
 function defeat(){};
 function whatIs() {
-    captainHindsight.textContent = "That is your opponent's life total. Bring that number down to zero by attacking with your creatures to win the game!"
-    setTimeout(silence, 5000)
+    captainHindsight.textContent = "That is your opponent's life total. Bring that number down to zero by attacking with your creatures to win the game!";
+    setTimeout(silence, 5000);
 }
 
 // layout some variables
@@ -43,9 +42,20 @@ const manaProducingLand = document.querySelectorAll(".lands")
 
 let lifeTotal = 20;
 let captainHindsight = document.getElementById("moveTaken");
-console.log(creature)
+
+// make a deck of "cards"
+
+let c1 = `<img class="card creature romeo" src="./assets/romeo.png">`;
+let c2 = `<img class="card creature tutu" src="./assets/twoTwo.png">`;
+let c3 = `<img class="card creature catCat" src="./assets/catCat.png">`;
+let c4 = `<img class="card creature nerdAlert" src="./assets/nerdAlert.png">`;
+let l1 = `<img class="card lands plains" src="./assets/plains.png">`;
+let l2 = `<img class="card lands forest" src="./assets/forest.png">`;
+
+let deckOfCards = [c1, l1, c2, c1, l1, c3, l2, l1, c4, l1, c2, c4, c3, l2, c1, l2, c2, l2, l2];
+
 // below are the actual functions that will be running/invoked
 
-lifeDiv.addEventListener('mouseover', whatIs)
+lifeDiv.addEventListener('mouseover', whatIs);
 creature.forEach(c => c.addEventListener('click', tapToAttack));
 manaProducingLand.forEach(m => m.addEventListener('click', tapForMana));
