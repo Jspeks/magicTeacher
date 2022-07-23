@@ -2,10 +2,14 @@
 function Intro(){};
 function main(){};
 function changePhase(){};
-function tapForMana(){};
-// trying to figure out how to 'onclick' have this function only rotate the element I clicked
-function tapToAttack(){
-    romeo.style.transform = "rotate(90deg)";
+function tapForMana(e){
+    e.target.style.transform = "rotate(90deg)";
+    captainHindsight.textContent = "You attempted to produce mana, but my code isn't done yet";
+    setTimeout(silence, 4000);
+};
+function tapToAttack(e) {
+    console.log(e)
+    e.target.style.transform = "rotate(90deg)";
     captainHindsight.textContent = "You attempted to attack, but my code isn't done yet";
     setTimeout(silence, 4000);
 };
@@ -24,22 +28,24 @@ function whatIs() {
 }
 
 // layout some variables
+const library = document.getElementById("library");
 const lifeDiv = document.getElementById("life")
-const catCat = document.getElementById("catCat");
-const romeo = document.getElementById("romeo");
-const nerd = document.getElementById("nerdAlert");
-const tutu = document.getElementById("tutu");
-const plains = document.getElementById("plains");
-const forest = document.getElementById("forest");
+const catCat = document.querySelectorAll(".catCat");
+const romeo = document.querySelectorAll(".romeo");
+const nerd = document.querySelectorAll(".nerdAlert");
+const tutu = document.querySelectorAll(".tutu");
+const plains = document.querySelectorAll(".plains");
+const forest = document.querySelectorAll(".forest");
 const whiteMana = document.getElementById("whiteMana");
 const greenMana = document.getElementById("greenMana");
-const library = document.getElementById("library");
 const creature = document.querySelectorAll(".creature");
+const manaProducingLand = document.querySelectorAll(".lands")
 
 let lifeTotal = 20;
 let captainHindsight = document.getElementById("moveTaken");
-
+console.log(creature)
 // below are the actual functions that will be running/invoked
 
 lifeDiv.addEventListener('mouseover', whatIs)
-creature.forEach(addEventListener('click', tapToAttack));
+creature.forEach(c => c.addEventListener('click', tapToAttack));
+manaProducingLand.forEach(m => m.addEventListener('click', tapForMana));
