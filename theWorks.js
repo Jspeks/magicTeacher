@@ -18,7 +18,11 @@ function silence(){
 function dealDamage(){};
 function playSpellFromHand(){};
 function playLandFromHand(){};
-function drawACard(){};
+
+let i = 0;
+function drawACard(){
+    hand.append(deckOfCards[i]); i+=1;
+};
 function victory(){};
 function defeat(){};
 function whatIs() {
@@ -27,16 +31,20 @@ function whatIs() {
 }
 
 // layout some variables
+const hand = document.getElementById("hand")
+const permanents = document.getElementById("permanents")
+const manaPool = document.getElementById("lands")
 const library = document.getElementById("library");
 const lifeDiv = document.getElementById("life")
+
+const whiteMana = document.querySelectorAll(".whiteMana");
+const greenMana = document.querySelectorAll(".greenMana");
 const catCat = document.querySelectorAll(".catCat");
 const romeo = document.querySelectorAll(".romeo");
 const nerd = document.querySelectorAll(".nerdAlert");
 const tutu = document.querySelectorAll(".tutu");
 const plains = document.querySelectorAll(".plains");
 const forest = document.querySelectorAll(".forest");
-const whiteMana = document.getElementById("whiteMana");
-const greenMana = document.getElementById("greenMana");
 const creature = document.querySelectorAll(".creature");
 const manaProducingLand = document.querySelectorAll(".lands")
 
@@ -56,6 +64,7 @@ let deckOfCards = [c1, l1, c2, c1, l1, c3, l2, l1, c4, l1, c2, c4, c3, l2, c1, l
 
 // below are the actual functions that will be running/invoked
 
-lifeDiv.addEventListener('mouseover', whatIs);
+lifeDiv.addEventListener('mouseover', whatIs)
 creature.forEach(c => c.addEventListener('click', tapToAttack));
 manaProducingLand.forEach(m => m.addEventListener('click', tapForMana));
+library.addEventListener('click', drawACard)

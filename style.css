@@ -61,7 +61,7 @@ body {
     display: flex;
     align-items: center;
     width: 780px;
-    height: 250px;
+    height: 300px;
 }
 /* the hand can be just a tad over the lands, just to save room without ruining the experience */
 #hand {
