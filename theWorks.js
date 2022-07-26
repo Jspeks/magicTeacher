@@ -46,6 +46,7 @@ const greenIMG = {
 const manaImg = [whiteImg, greenIMG]
 
 function tapForestForMana(e){
+    if(!e.target.classList.contains("tapped")){
     e.target.style.transform = "rotate(90deg)";
     e.target.classList.add("tapped");
     let clr = 1;
@@ -57,19 +58,24 @@ function tapForestForMana(e){
         manaSymbol.classList.add(manaImg[0].classes[i]);
     }
     manaPool.append(manaSymbol);
+    console.log(e.target)
+    }
 };
 function tapPlainsForMana(e){
+    if(!e.target.classList.contains("tapped")){
+    captainHindsight.textContent = "You attempted to produce mana, but my code isn't done yet";
+    setTimeout(silence, 4000);
     e.target.style.transform = "rotate(90deg)";
     e.target.classList.add("tapped");
     let clr = 0;
-    captainHindsight.textContent = "You attempted to produce mana, but my code isn't done yet";
-    setTimeout(silence, 4000);
     let manaSymbol = document.createElement('img')
     manaSymbol.src = manaImg[clr].source;
     for (let i=0; i<manaImg[clr].classes.length; i++){
         manaSymbol.classList.add(manaImg[0].classes[i]);
     }
     manaPool.append(manaSymbol);
+    console.log(e.target)
+    }
 };
 
 
