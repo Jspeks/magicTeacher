@@ -28,29 +28,45 @@ function main(){
 };
 function changePhase(){};
 function untapStep() {
-    console.log(creature)
     creature.forEach((c) => c.classList.remove("tapped"))
     creature.forEach((c) => c.style.transform ="rotate(0deg)")
+    manaProducingLand.forEach((c) => c.classList.remove("tapped"))
+    manaProducingLand.forEach((c) => c.style.transform ="rotate(0deg)")
 }
 
 // ability to produce mana here
 const whiteImg = {
-    src: "./assets/whiteSymbol.png",
+    source: "./assets/whiteSymbol.png",
     classes: ["mana", "whiteMana"]
 }
 const greenIMG = {
-    src: "./assets/greenSymbol.png",
+    source: "./assets/greenSymbol.png",
     classes: ["mana", "greenMana"]
 }
-const manaImg = {whiteImg, greenIMG}
+const manaImg = [whiteImg, greenIMG]
 
-function tapForMana(e){
+function tapForestForMana(e){
     e.target.style.transform = "rotate(90deg)";
+    e.target.classList.add("tapped");
+    let clr = 1;
     captainHindsight.textContent = "You attempted to produce mana, but my code isn't done yet";
     setTimeout(silence, 4000);
     let manaSymbol = document.createElement('img')
-    manaSymbol.src = manaImg[0].src;
-    for (let i=0; i<manaImg[0].classes.length; i++){
+    manaSymbol.src = manaImg[clr].source;
+    for (let i=0; i<manaImg[clr].classes.length; i++){
+        manaSymbol.classList.add(manaImg[0].classes[i]);
+    }
+    manaPool.append(manaSymbol);
+};
+function tapPlainsForMana(e){
+    e.target.style.transform = "rotate(90deg)";
+    e.target.classList.add("tapped");
+    let clr = 0;
+    captainHindsight.textContent = "You attempted to produce mana, but my code isn't done yet";
+    setTimeout(silence, 4000);
+    let manaSymbol = document.createElement('img')
+    manaSymbol.src = manaImg[clr].source;
+    for (let i=0; i<manaImg[clr].classes.length; i++){
         manaSymbol.classList.add(manaImg[0].classes[i]);
     }
     manaPool.append(manaSymbol);
@@ -62,7 +78,6 @@ function tapToAttack(e) {
     captainHindsight.textContent = "You attempted to attack, but my code isn't done yet";
     setTimeout(silence, 4000);
     e.target.classList.add("tapped")
-    console.log(permanents)
 };
 function silence(){
     captainHindsight.textContent = ""
@@ -139,6 +154,7 @@ let deckOfCards = [c1, l1, c2, c1, l1, c3, l2, l1, c4, l1, c2, c4, c3, l2, c1, l
 main()
 lifeDiv.addEventListener('mouseover', whatIs)
 creature.forEach(c => c.addEventListener('click', tapToAttack));
-manaProducingLand.forEach(m => m.addEventListener('click', tapForMana));
+forest.forEach(m => m.addEventListener('click', tapForestForMana));
+plains.forEach(m => m.addEventListener('click', tapPlainsForMana));
 library.addEventListener('click', drawACard)
 console.log(permanents)
