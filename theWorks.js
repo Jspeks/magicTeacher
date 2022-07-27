@@ -85,11 +85,11 @@ function untapStep() {
 // ability to produce mana here
 const whiteImg = {
     source: "./assets/whiteSymbol.png",
-    classes: ["mana", "whiteMana"];
+    classes: ["mana", "whiteMana"]
 };
 const greenIMG = {
     source: "./assets/greenSymbol.png",
-    classes: ["mana", "greenMana"];
+    classes: ["mana", "greenMana"]
 };
 const manaImg = [whiteImg, greenIMG];
 
@@ -245,27 +245,27 @@ function restart(){
 
 let c1 = {
     src: "./assets/romeo.png",
-    classes: ["card", "creature", "romeo", 1];
+    classes: ["card", "creature", "romeo", 1]
 };
 let c2 = {
     src: "./assets/twoTwo.png",
-    classes: ["card", "creature", "tutu", 2];
+    classes: ["card", "creature", "tutu", 2]
 };
 let c3 = {
     src: "./assets/catCat.png",
-    classes: ["card", "creature", "catCat", 1];
+    classes: ["card", "creature", "catCat", 1]
 };
 let c4 = {
     src: "./assets/nerdAlert.png",
-    classes: ["card", "creature", "nerdAlert", 2];
+    classes: ["card", "creature", "nerdAlert", 2]
 };
 let l1 = {
     src: "./assets/plains.png",
-    classes: ["card", "land", "plains"];
+    classes: ["card", "land", "plains"]
 };
 let l2 = {
     src: "./assets/forest.png",
-    classes: ["card", "land", "forest"];
+    classes: ["card", "land", "forest"]
 };
 // let c1 = `<img class="card creature romeo" src="./assets/romeo.png">`;
 // let c2 = `<img class="card creature tutu" src="./assets/twoTwo.png">`;
