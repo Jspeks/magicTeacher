@@ -17,6 +17,7 @@ let damageDiv = document.getElementById("damage");
 let postCombatDiv = document.getElementById("postCombat");
 let endDiv = document.getElementById("endPhase");
 
+// classes that'll show up in the HTML
 const whiteMana = document.querySelectorAll(".whiteMana");
 const greenMana = document.querySelectorAll(".greenMana");
 const catCat = document.querySelectorAll(".catCat");
