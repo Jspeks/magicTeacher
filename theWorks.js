@@ -1,4 +1,4 @@
-
+// My Variable Index
 // layout some variables
 const hand = document.getElementById("hand");
 const permanents = document.getElementById("permanents");
@@ -100,7 +100,6 @@ function tapForestForMana(e){
     e.target.classList.add("tapped");
     let clr = 1;
     captainHindsight.textContent = "Tapping a Forest produces green mana, use that to help cast your green spells.";
-    setTimeout(silence, 4000);
     let manaSymbol = document.createElement('img');
     manaSymbol.src = manaImg[clr].source;
     for (let i=0; i<manaImg[clr].classes.length; i++){
@@ -112,7 +111,6 @@ function tapForestForMana(e){
 function tapPlainsForMana(e){
     if(!e.target.classList.contains("tapped")){
     captainHindsight.textContent = "Tapping a Plains produces white mana, use that to help cast your white spells.";
-    setTimeout(silence, 4000);
     e.target.style.transform = "rotate(90deg)";
     e.target.classList.add("tapped");
     let clr = 0;
@@ -127,16 +125,12 @@ function tapPlainsForMana(e){
 function tapToAttack(e) {
     if(!e.target.classList.contains("tapped")){
     e.target.style.transform = "rotate(90deg)";
-    setTimeout(silence, 4000);
     e.target.classList.add("tapped");
     };
     let power = parseInt(e.target.classList[3]);
     totalDamage += power;
     console.log(totalDamage);
     e.target.removeEventListener('click', tapToAttack);
-};
-function silence(){
-    captainHindsight.textContent = "";
 };
 function playSpellFromHand(){};
 function playLandFromHand(){};
@@ -187,6 +181,7 @@ function drawACard(){
 function dealDamage(){
     preCombatDiv.classList.remove("currentPhase");
     combatDiv.classList.add("currentPhase");
+    manaPool.textContent = ""
     forest.forEach(m => m.removeEventListener('click', tapForestForMana));
     plains.forEach(m => m.removeEventListener('click', tapPlainsForMana));
     creature.forEach(c => c.addEventListener('click', tapToAttack));
@@ -211,6 +206,7 @@ function secondMain(){
     postCombatDiv.classList.add("currentPhase");
     captainHindsight.textContent = "Normally this would be a chance to play more cards, but we're done for this turn.";
     setTimeout(endTurn, 5000);
+    totalDamage = totalDamage - totalDamage;
 };
 function endTurn(){
     postCombatDiv.classList.remove("currentPhase");
@@ -237,7 +233,6 @@ function defeat(){
 };
 function whatIs() {
     captainHindsight.textContent = "That is your opponent's life total. Bring that number down to zero by attacking with your creatures to win the game!";
-    setTimeout(silence, 5000);  
 };
 function restart(){
     location = location;
