@@ -15,7 +15,7 @@ let preCombatDiv = document.getElementById("preCombat");
 let combatDiv = document.getElementById("combat");
 let damageDiv = document.getElementById("damage");
 let postCombatDiv = document.getElementById("postCombat");
-let endDiv = document.getElementById("end");
+let endDiv = document.getElementById("endPhase");
 
 const whiteMana = document.querySelectorAll(".whiteMana");
 const greenMana = document.querySelectorAll(".greenMana");
@@ -49,6 +49,7 @@ function drawSeven(){
     }
     hand.append(drawnCard);
     topCard+=1;
+    console.log(hand);
     }
     setTimeout(() => {
         draw();
@@ -142,30 +143,21 @@ function playLandFromHand(){};
 
 function changePhase(){
     untapDiv.classList.add("currentPhase");
-    if(untapDiv.classList.contains("currentPhase")){
-
-        setTimeout(() => {
             untapStep();
             captainHindsight.textContent = "At the start of your turn, each of your permanent cards will untap during this phase.";
             setTimeout(() => {
-                setTimeout(silence, 5000);
                 untapDiv.classList.remove("currentPhase");
                 upkeepDiv.classList.add("currentPhase");
                 captainHindsight.textContent = "During your Upkeep, make sure you're all untapped.";
-                setTimeout(() => {
-                    upkeepDiv.classList.remove('currentPhase');
-                    drawDiv.classList.add("currentPhase");
-                    captainHindsight.textContent = "During your draw step, click your Library to draw a card. This will officially start your turn.";
-                    library.addEventListener('click', drawACard)
                     setTimeout(() => {
-                        silence();
+                        upkeepDiv.classList.remove('currentPhase');
+                        drawDiv.classList.add("currentPhase");
+                        captainHindsight.textContent = "During your draw step, click your Library to draw a card. This will officially start your turn.";
+                        library.addEventListener('click', drawACard)
                     }, 5000)
                 }, 5000);
-            }, 5000);
-        }, 5000);
         
     };
-};
 
 function drawACard(){
     let drawnCard = document.createElement('img')
@@ -175,7 +167,9 @@ function drawACard(){
     }
     hand.append(drawnCard);
     topCard+=1;
-
+    if(topCard > 19){
+        defeat();
+    };
     library.removeEventListener('click', drawACard);
     drawDiv.classList.remove("currentPhase");
     preCombatDiv.classList.add("currentPhase");
@@ -204,11 +198,29 @@ function calculateLife(){
     combatDiv.classList.remove("currentPhase");
     damageDiv.classList.add("currentPhase");
     lifeTotal = lifeTotal - totalDamage;
-    lifeDiv.textContent = ""
-    lifeDiv.append(lifeTotal)
+    lifeDiv.textContent = "";
+    lifeDiv.append(lifeTotal);
     if(lifeTotal < 1){
         victory();
     };
+    damageDiv.removeEventListener('click', calculateLife);
+    captainHindsight.textContent = `You just hit your opponent for ${totalDamage} damage!`;
+    setTimeout(secondMain, 5000);
+};
+function secondMain(){
+    damageDiv.classList.remove("currentPhase");
+    postCombatDiv.classList.add("currentPhase");
+    captainHindsight.textContent = "Normally this would be a chance to play more cards, but we're done for this turn.";
+    setTimeout(endTurn, 5000);
+};
+function endTurn(){
+    postCombatDiv.classList.remove("currentPhase");
+    endDiv.classList.add("currentPhase");
+    captainHindsight.textContent = "End the turn."
+    setTimeout(() => {
+        endDiv.classList.remove("currentPhase");
+        changePhase();
+    }, 5000);
 };
 function victory(){
     if(confirm("Congratulations! You defeated your opponent! Would you like to start over?")) {
@@ -217,7 +229,13 @@ function victory(){
         alert("Thank you for playing!");
     };
 };
-function defeat(){};
+function defeat(){
+    if(confirm("Congratulations! You managed to lose in my tutorial... When you draw from a deck without any cards in it, you lose. This deck only had about 20 cards. I didn't think you would lose. Did you want to try again?")) {
+        main();
+    } else {
+        alert("Thank you for giving it a shot at least!");
+    };
+};
 function whatIs() {
     captainHindsight.textContent = "That is your opponent's life total. Bring that number down to zero by attacking with your creatures to win the game!";
     setTimeout(silence, 5000);  
@@ -265,4 +283,4 @@ let deckOfCards = [c1, l1, c2, c1, l1, c3, l2, l1, c4, l1, c2, c4, c3, l2, c1, l
 // etc.. 
 
 main()
-lifeDiv.addEventListener('mouseover', whatIs)
+lifeDiv.addEventListener('click', whatIs)
