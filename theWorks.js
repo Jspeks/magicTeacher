@@ -7,6 +7,16 @@ const library = document.getElementById("library");
 const lifeDiv = document.getElementById("life");
 const manaPool = document.getElementById("manaPool");
 
+// these are the phases of the turn
+let untapDiv = document.getElementById("untap");
+let upkeepDiv = document.getElementById("upkeep");
+let drawDiv = document.getElementById("draw");
+let preCombatDiv = document.getElementById("preCombat");
+let combatDiv = document.getElementById("combat");
+let damageDiv = document.getElementById("damage");
+let postCombatDiv = document.getElementById("postCombat");
+let endDiv = document.getElementById("end");
+
 const whiteMana = document.querySelectorAll(".whiteMana");
 const greenMana = document.querySelectorAll(".greenMana");
 const catCat = document.querySelectorAll(".catCat");
@@ -18,15 +28,51 @@ const forest = document.querySelectorAll(".forest");
 const creature = document.querySelectorAll(".creature");
 const manaProducingLand = document.querySelectorAll(".lands")
 
+let topCard = 0;
 let lifeTotal = 20;
 let captainHindsight = document.getElementById("moveTaken");
+let totalDamage = 0;
 
 // need to make some dummies for what I'll need the game to do
 function Intro(){};
 function main(){
         lifeDiv.append(lifeTotal)
+        captainHindsight.textContent = "I will be your guide. Below, I will inform you of any actions you take during your playthrough."
+        drawSeven()
 };
-function changePhase(){};
+function drawSeven(){
+    function draw(){
+            let drawnCard = document.createElement('img')
+    drawnCard.src = deckOfCards[topCard].src;
+    for (let i=0; i<deckOfCards[topCard].classes.length; i++){
+        drawnCard.classList.add(deckOfCards[topCard].classes[i]);
+    }
+    hand.append(drawnCard);
+    topCard+=1;
+    }
+    setTimeout(() => {
+        draw();
+        setTimeout(() => {
+            draw()
+            setTimeout(() => {
+                draw()
+                setTimeout(() => {
+                    draw()
+                    setTimeout(() => {
+                        draw()
+                        setTimeout(() => {
+                            draw()
+                            setTimeout(() => {
+                                draw()
+                                changePhase()
+                            }, 500)
+                        }, 500)
+                    }, 500)
+                }, 500)
+            }, 500)
+        }, 500)
+    }, 500)
+}
 function untapStep() {
     creature.forEach((c) => c.classList.remove("tapped"))
     creature.forEach((c) => c.style.transform ="rotate(0deg)")
@@ -50,7 +96,7 @@ function tapForestForMana(e){
     e.target.style.transform = "rotate(90deg)";
     e.target.classList.add("tapped");
     let clr = 1;
-    captainHindsight.textContent = "You attempted to produce mana, but my code isn't done yet";
+    captainHindsight.textContent = "Tapping a Forest produces green mana, use that to help cast your green spells.";
     setTimeout(silence, 4000);
     let manaSymbol = document.createElement('img')
     manaSymbol.src = manaImg[clr].source;
@@ -58,12 +104,11 @@ function tapForestForMana(e){
         manaSymbol.classList.add(manaImg[0].classes[i]);
     }
     manaPool.append(manaSymbol);
-    console.log(e.target)
     }
 };
 function tapPlainsForMana(e){
     if(!e.target.classList.contains("tapped")){
-    captainHindsight.textContent = "You attempted to produce mana, but my code isn't done yet";
+    captainHindsight.textContent = "Tapping a Plains produces white mana, use that to help cast your white spells.";
     setTimeout(silence, 4000);
     e.target.style.transform = "rotate(90deg)";
     e.target.classList.add("tapped");
@@ -74,27 +119,54 @@ function tapPlainsForMana(e){
         manaSymbol.classList.add(manaImg[0].classes[i]);
     }
     manaPool.append(manaSymbol);
-    console.log(e.target)
     }
 };
 
 
 function tapToAttack(e) {
+    if(!e.target.classList.contains("tapped")){
     e.target.style.transform = "rotate(90deg)";
-    captainHindsight.textContent = "You attempted to attack, but my code isn't done yet";
     setTimeout(silence, 4000);
     e.target.classList.add("tapped")
+    }
+    let power = parseInt(e.target.classList[3])
+    totalDamage += power
+    console.log(totalDamage)
+    e.target.removeEventListener('click', tapToAttack)
 };
 function silence(){
     captainHindsight.textContent = ""
 };
-function dealDamage(){
-
-};
 function playSpellFromHand(){};
 function playLandFromHand(){};
 
-let topCard = 0;
+function changePhase(){
+    untapDiv.classList.add("currentPhase");
+    if(untapDiv.classList.contains("currentPhase")){
+
+        setTimeout(() => {
+            untapStep();
+            captainHindsight.textContent = "At the start of your turn, each of your permanent cards will untap during this phase.";
+            setTimeout(() => {
+                setTimeout(silence, 5000);
+                untapDiv.classList.remove("currentPhase");
+                upkeepDiv.classList.add("currentPhase");
+                captainHindsight.textContent = "During your Upkeep, make sure you're all untapped.";
+                setTimeout(() => {
+                    upkeepDiv.classList.remove('currentPhase');
+                    drawDiv.classList.add("currentPhase");
+                    captainHindsight.textContent = "During your draw step, click your Library to draw a card. This will officially start your turn.";
+                    library.addEventListener('click', drawACard)
+                    setTimeout(() => {
+                        silence();
+                    }, 5000)
+                }, 5000);
+            }, 5000);
+        }, 5000);
+        
+    };
+};
+
 function drawACard(){
     let drawnCard = document.createElement('img')
     drawnCard.src = deckOfCards[topCard].src;
@@ -103,17 +175,52 @@ function drawACard(){
     }
     hand.append(drawnCard);
     topCard+=1;
-    console.log(drawnCard);
 
-    // hand.append(deckOfCards[topCard]); 
-    // topCard+=1;
+    library.removeEventListener('click', drawACard);
+    drawDiv.classList.remove("currentPhase");
+    preCombatDiv.classList.add("currentPhase");
+    captainHindsight.textContent = "Once you've drawn your card, now is your chance to use the cards in your hand.";
+    forest.forEach(m => m.addEventListener('click', tapForestForMana));
+    plains.forEach(m => m.addEventListener('click', tapPlainsForMana));
+    combatDiv.addEventListener('click', dealDamage)
+
+    setTimeout(() => {
+        captainHindsight.textContent = "You may only play 1 land per turn. Use your mana to cast your creature spells.";
+        setTimeout(() => {
+            captainHindsight.textContent = "When you're ready to attack your opponent, just click the Combat Step.";
+        }, 7000)
+    }, 7000 )
 };
-function victory(){};
+function dealDamage(){
+    preCombatDiv.classList.remove("currentPhase");
+    combatDiv.classList.add("currentPhase");
+    forest.forEach(m => m.removeEventListener('click', tapForestForMana));
+    plains.forEach(m => m.removeEventListener('click', tapPlainsForMana));
+    creature.forEach(c => c.addEventListener('click', tapToAttack));
+    captainHindsight.textContent = "Now, to COMBAT! tap all the creatures you want to attack with. Then move to the Damage step.";
+    damageDiv.addEventListener('click', calculateLife);
+};
+function calculateLife(){
+    combatDiv.classList.remove("currentPhase");
+    damageDiv.classList.add("currentPhase");
+    lifeTotal = lifeTotal - totalDamage;
+    lifeDiv.textContent = ""
+    lifeDiv.append(lifeTotal)
+    if(lifeTotal < 1){
+        victory();
+    };
+};
+function victory(){
+    if(confirm("Congratulations! You defeated your opponent! Would you like to start over?")) {
+        main();
+    } else {
+        alert("Thank you for playing!");
+    };
+};
 function defeat(){};
 function whatIs() {
     captainHindsight.textContent = "That is your opponent's life total. Bring that number down to zero by attacking with your creatures to win the game!";
-    setTimeout(silence, 5000); 
-    untapStep();   
+    setTimeout(silence, 5000);  
 }
 
 // make a deck of "cards"
@@ -159,8 +266,3 @@ let deckOfCards = [c1, l1, c2, c1, l1, c3, l2, l1, c4, l1, c2, c4, c3, l2, c1, l
 
 main()
 lifeDiv.addEventListener('mouseover', whatIs)
-creature.forEach(c => c.addEventListener('click', tapToAttack));
-forest.forEach(m => m.addEventListener('click', tapForestForMana));
-plains.forEach(m => m.addEventListener('click', tapPlainsForMana));
-library.addEventListener('click', drawACard)
-console.log(permanents)
