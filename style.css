@@ -74,7 +74,6 @@ body {
     justify-content: space-evenly;
     width: 790px;
     cursor: pointer;
-    border-color: 3A231A;
 }
 
 /* my deck will go here */
@@ -99,4 +98,9 @@ h3 {
 .currentPhase {
     border-style: dashed;
     font-weight: bold;
+}
+
+.phase {
+        border-color: 3A231A;
+        padding: 10px;
 }
