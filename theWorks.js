@@ -79,8 +79,10 @@ function drawSeven(){
 function untapStep() {
     creature.forEach((c) => c.classList.remove("tapped"));
     creature.forEach((c) => c.style.transform ="rotate(0deg)");
+    console.log(manaProducingLand)
     manaProducingLand.forEach((c) => c.classList.remove("tapped"));
     manaProducingLand.forEach((c) => c.style.transform ="rotate(0deg)");
+
 };
 
 // ability to produce mana here
